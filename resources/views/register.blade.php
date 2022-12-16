@@ -116,39 +116,57 @@ form .signup-link a:hover{
 </head>
   <body>
     <div class="container">
+      
       <div class="wrapper">
         <div class="title"><span>Sign Up Form</span></div>
-        <form action="#">
+        <form action="{{route('register-user')}}"  method ="POST" enctype="multipart/form-data">
+        @if (Session::has('success'))
+            <div class="alert alert-success">{{Session::get('sucess')}}</div>
+        @endif 
+        @if (Session::has('fail'))
+            <div class="alert alert-danger">{{Session::get('fail')}}</div>
+        @endif 
+        @csrf
           <div class="row">
             
            <label> First Name :</label>
-            <input type="text" placeholder="Enter First Name" required><br>
+            <input type="text" name ="firstname" placeholder="Enter First Name" value = "{{old('firstname')}}" required><br>
+            <span class="text-danger">@error('firstname') {{$message}} @enderror</span><br>
           </div>
           <br>
           <div class="row">
           <label>Last Name :</label>
-            <input type="text" placeholder="Enter Last Name" required>
+            <input type="text" name ="lastname" placeholder="Enter Last Name" value = "{{old('lastname')}}" required>
+            <span class="text-danger">@error('lastname') {{$message}} @enderror</span><br>
           </div>
           <br>
           <div class="row">
           <label>Email :</label>
-            <input type="text" placeholder="Enter Email" required>
+            <input type="text"name ="email" placeholder="Enter Email" value = "{{old('email')}}" required>
+            <span class="text-danger">@error('email') {{$message}} @enderror</span><br>
           </div>
           <br>
           <div class="row">
           <label>Password :</label>
-            <input type="password" placeholder="Enter Password" required>
+            <input type="password" name="password" @error('password') is-invalid @enderror placeholder="Enter Password" required>
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span><br>
+            @enderror
+            
           </div>
           <br>
           <div class="row">
           <label>Confirm Password :</label>
-            <input type="password" placeholder="Confirm Password" required>
+            <input type="password" name="password_confirmation" @error('password') is-invalid @enderror placeholder="Confirm Password" required>
+            
           </div>
           <br>
           <div class="row">
           <label>Register as :</label>
-          <select name="role" id="role">
-            <option value="user">User</option>
+          <select name="usertype" id="role">
+            <option value="User">User</option>
             <option value="venue owner">Venue Owner</option>
             
         </select>

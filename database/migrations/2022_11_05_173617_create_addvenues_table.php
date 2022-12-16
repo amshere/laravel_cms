@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('price');
             $table->string('capacity');
             $table->mediumText('photo');
+            //$table->bigint('userid');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
 
 
